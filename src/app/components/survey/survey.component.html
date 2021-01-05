@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>QuizMaker - Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+</head>
+
+<body id="page-top">
+  <div id="wrapper">
+    <!-- Sidebar -->
+
+
+   <sidebar-comp></sidebar-comp>
+    <!-- Sidebar -->
+
+    <script>
+
+$("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
+    $("body").toggleClass("sidebar-toggled");
+    $(".sidebar").toggleClass("toggled");
+    if ($(".sidebar").hasClass("toggled")) {
+      $('.sidebar .collapse').collapse('hide');
+    };
+  });
+
+
+    </script>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- TopBar -->
+        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+          <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <div *ngIf="activityLog.reviewingQuiz.length>0 || activityLog.invigilatingQuiz.length>0 ">
+                <span class="badge badge-danger badge-counter">{{activityLog.reviewingQuiz.length+activityLog.invigilatingQuiz.length}}</span>
+              </div>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                    <span class="font-weight-bold">You have  {{activityLog.reviewingQuiz.length}} quiz to review </span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-donate text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                   You are Invigilating {{activityLog.invigilatingQuiz.length}} quiz
+                  </div>
+                </a>
+                <a *ngIf="showAllMsgFlag" class="dropdown-item d-flex align-items-center" [routerLink]="['/quiz-notification', 'activeSurvey']">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-poll text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                   You have  {{activeSurveyCount}} active Surveys
+                  </div>
+                </a>
+                <a *ngIf="showAllMsgFlag" class="dropdown-item d-flex align-items-center" [routerLink]="['/quiz-notification', 'upcomingSurvey']">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-poll fa-hourglass-end text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                   You have  {{upcomingSurveyCount}} upcoming Surveys
+                  </div>
+                </a>
+                <a id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" class="dropdown-item text-center small text-gray-500" (click)="showAllMsg()">Show All Messages</a>
+             
+              </div>
+            </li>
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <span class="badge badge-warning badge-counter">2</span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="assets/img/man.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
+                    <div class="small text-gray-500">Udin Cilok · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="assets/img/girl.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-default"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people
+                      say this to all dogs, even if they aren't good...</div>
+                    <div class="small text-gray-500">Jaenab · 2w</div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-tasks fa-fw"></i>
+                <span class="badge badge-success badge-counter">3</span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Task
+                </h6>
+                <a class="dropdown-item align-items-center" href="#">
+                  <div class="mb-3">
+                    <div class="small text-gray-500">Design Button
+                      <div class="small float-right"><b>50%</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item align-items-center" href="#">
+                  <div class="mb-3">
+                    <div class="small text-gray-500">Make Beautiful Transitions
+                      <div class="small float-right"><b>30%</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                      <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item align-items-center" href="#">
+                  <div class="mb-3">
+                    <div class="small text-gray-500">Create Pie Chart
+                      <div class="small float-right"><b>75%</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">View All Taks</a>
+              </div>
+            </li>
+            <div class="topbar-divider d-none d-sm-block"></div>
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <img class="img-profile rounded-circle" src="assets/img/boy.png" style="max-width: 60px">
+                <span class="ml-2 d-none d-lg-inline text-white small">{{user.username}}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+
+   <!-- Modal Logout -->
+   <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+   aria-hidden="true">
+   <div class="modal-dialog" role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <p>Are you sure you want to logout?</p>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+         <a  (click)="logout()" data-dismiss="modal" class="btn btn-primary">Logout</a>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+
+
+       <!-- Create Quiz  Modal -->
+       <div class="modal fade" id="createQuizModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">Create  Survey</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+            <form name="saveSurveyFrm" method="POST"  class="user">
+           <div class="modal-body">
+             <input type="text" class="form-control" [(ngModel)]="quizObj.quiz_title" id="quiz_title" name="quiz_title"
+                                    placeholder="Enter Quiz Title"><br>
+                                    
+                    
+                                    <br>
+                                    <select  class="select2-single-placeholder form-control" name="activityId" [(ngModel)]="activity.activity_id" id="select2SinglePlaceholder">
+                                      <option value="">Select Activity</option>
+                                      <option  [value]="activity.activity_id" *ngFor="let activity of activityList"> {{activity.activity_title}}</option>
+
+
+                                    </select>
+                                   
+                                    <br>
+            <textarea class="form-control"  placeholder="Enter Intro Message" id="introduction_message" [(ngModel)]="quizObj.introduction_message" name="introduction_message" rows="3"></textarea>
+            <br>
+            <textarea class="form-control" placeholder="Enter Conclusion Message" id="conclusion_message" [(ngModel)]="quizObj.conclusion_message" name="conclusion_message" rows="3"></textarea>
+
+
+
+             </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;
+             <button type="button" (click)="savePoll()" data-dismiss="modal" style="color: white;" class="btn btn-primary">Save Survey</button>
+           </div>
+           </form>
+         </div>
+       </div>
+     </div>
+
+
+
+
+
+
+
+      <!-- Update Quiz  Modal -->
+      <div class="modal fade" id="addActivityModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Update Quiz</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+           <form name="saveActFrm" method="POST" action ="" class="user">
+          <div class="modal-body">
+
+            <input type="text" class="form-control"  [(ngModel)]="quizEditObj.quiz_title" id="activityName" name="activity_name"
+                                   placeholder="Enter activity"><br>
+           <textarea class="form-control" id="activityDesc" [(ngModel)]="quizEditObj.introduction_message" name="activity_desc" rows="3"></textarea>
+
+
+            <input type="hidden" class="form-control" value="{{user.username}}"  [(ngModel)]="user.username" id="creator_id" name="creator_id">
+
+         <input type="hidden" class="form-control" value="1" id="status_id" name="status_id">
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>&nbsp;&nbsp;
+            <button type="button"  data-dismiss="modal" style="color: white;" class="btn btn-primary">Save Activity</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+<!-- Delete Confirm  Modal -->
+     <div class="modal modalDelete fade" id="deleteConfrmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+       aria-hidden="true">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">Delete Survey</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+            <form method="POST" action ="" class="user">
+          Are you Sure to delete this Quiz :<b> {{quizTitleDel}}</b>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+             &nbsp; &nbsp;  <a id="deleteActivityAction" (click)="deleteSurvey()" data-dismiss="modal" type="button" style="color: white;" class="btn btn-danger">Delete Quiz</a>
+           </div>
+           </form>
+         </div>
+       </div>
+     </div>
+
+<!-- Modal Ends -->
+
+<div style="margin-left:1%" class="row">
+       <div class="col-lg-12 mb-4">
+         <!-- Simple Tables -->
+         <div class="card">
+           <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+           <button type="button" data-toggle="modal" data-target="#createQuizModal" (click)="setAddQuiz()"  class="btn btn-primary mb-1"><i class="fa fa-vote-yea"></i>Create Survey +</button>
+           <button type="button" data-toggle="modal" *ngIf="inDesignFlag" (click)="backQuizList()"  class="btn btn-primary mb-1">Back Poll Listing</button>
+           </div>
+<!-- Quiz Designing Screen Starts -->
+           <div *ngIf="inDesignFlag">
+
+<table>
+<tr>
+  <div  class="breadcrumb-pagination">
+
+    
+<!-- Quiz Designing Screen Ends -->
+<br><br><br>
+<!-- Quiz Build Part Starts -->
+
+<div  *ngIf="activebuildFlag" class="panel panel-info">
+  <div class="panel-heading-title">
+    <div class="panel-title"> {{quizObj.quiz_title}}</div>
+  </div>
+</div>
+<br>
+<div *ngIf="activebuildFlag" class="panel panel-info">
+    <div class="panel-heading">
+      <div class="panel-title">Survey Introduction  </div>
+      <i style="margin-left:83%" (click)="edit('Intro')" class="fa fa-edit"></i>
+    </div>
+  </div>
+    <textarea *ngIf="activebuildFlag" class="form-control"  [readonly]="editIntroFlag?false:true" placeholder="Enter Intro Message" id="introduction_message" [(ngModel)]="quizObj.introduction_message" name="introduction_message" rows="3"></textarea>
+
+    <button type="button" *ngIf="editIntroFlag" class="btn btn-outline-primary" (click)="cancel('Intro')">Cancel</button>&nbsp;&nbsp;
+    <button  type="button" *ngIf="editIntroFlag" (click)="update('Intro')" style="color: white;" class="btn btn-primary">Update</button>
+<br>
+
+
+
+ <div *ngIf="activebuildFlag" class="panel panel-info">
+    <div class="panel-heading">
+      <div class="panel-title">Survey Conlusion </div>
+      <i style="margin-left:83%" (click)="edit('Conclu')" class="fa fa-edit"></i>
+    </div>
+  </div>
+
+  <textarea *ngIf="activebuildFlag" class="form-control" [readonly]="editConcluFlag?false:true"  placeholder="Enter Conclusion Message" id="conclusion_message" [(ngModel)]="quizObj.conclusion_message" name="conclusion_message" rows="3"></textarea>
+  <button type="button" *ngIf="editConcluFlag" class="btn btn-outline-primary" (click)="cancel('Conclu')">Cancel</button>&nbsp;&nbsp;
+    <button type="button" *ngIf="editConcluFlag" (click)="update('Conclu')" style="color: white;" class="btn btn-primary">Update</button>
+
+  <br>
+  </div>
+<br><br><br><br>
+
+<table  *ngIf="activebuildFlag" style="overflow: auto;" class="table align-items-center table-flush table-hover" id="example1">
+  <thead >
+    <tr>
+      <th>Title</th>
+      <th>Options</th>
+       <th>Response Type</th>
+       <th>Action</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody *ngIf="activebuildFlag">
+
+    <tr *ngFor="let question of quizObj.questionList;let i =index">
+        <td *ngIf="question.question_title !=0">{{question.question_title}}</td>
+        <td *ngIf="question.responseList.length!=0">{{question.responseList.length}}</td>
+        <td *ngIf="question.question_type!=null">{{question.responseList[0].surveyRatingOption?'Star Rating':'Text Input'}}</td>
+        <td *ngIf="question.question_mark!=0">{{question.question_mark}}</td>
+
+
+        <td><button style="margin-left: 30px;"      (click) = "deleteQuestionRow(question.questionSeq)"><i style="color:red" class="fa fa-trash"></i></button>
+        &nbsp;<button data-target="#editQuestionModal"   data-toggle="modal" (click) = "editQuestionRowModal(question.id)"><i style="color:red" class="fa fa-edit"></i></button></td>
+      
+     
+  
+</tr>
+</tbody>
+  </table>
+  <button type="button"   *ngIf="activebuildFlag " data-toggle="modal" data-target="#addQuestionModal" (click)="addQuestion()"  style="color: white;margin-left:40%" class="btn btn-primary"><img src="../../../assets/image/icons8-question-mark-24.png">Add Question +</button>
+  <button type="button"    *ngIf="activebuildFlag" (click)="goToSetting()"  style="color: white;margin-left:60%;margin-top: -5%;" class="btn btn-primary">Go to Setting</button>
+
+
+
+
+</table>
+
+
+          </div>
+
+          <!-- Quiz Build Part Ends -->
+
+
+
+ <!-- Edit   Question Modal -->
+ <div *ngIf="editQuestionModalFlag" class="modal fade" style="height: 500%; width: 55%;margin-top:5%" id="editQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog" role="document">
+   <div class="modal-content modal-content-question">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Edit  Survey Question</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+      <form #editQuestionFrm="ngForm"  name="editQuestionFrm" method="POST"  class="user">
+
+    <br><br>   <br><br>
+
+ 
+    <textarea  class="form-control" (change)="validateForm()" [ngClass]="questionFlag?'is-invalid':'is-valid'"  placeholder="Enter Your Question" id="question"  [(ngModel)]="editQuestionObj.question_title" name="question" rows="3"></textarea>
+
+
+<button  (click)="editAnswerTable(editQuestionObj.questionSeq)" class="btn btn-primary" >Add Response</button> <br> <br>
+
+
+<table [ngClass]="is-valid">
+  <tr>
+    <th>Response Text</th>
+    <th>Response Rating   </th>
+
+    <th></th>
+  </tr>
+  <tr  [ngClass]="is-valid" *ngFor="let answer of editQuestionObj.responseList; let i = index">
+    <td >
+    
+    <label class="container">
+      <div class="check-box">
+        <input  class="form-control" [ngClass]="is-valid"  type="checkbox" [(ngModel)]="editQuestionObj.responseList[i].surveyTextOption" name="text{{i}}" (change)="toggleVisibility($event,i)" id="text{{i}}" value="on">
+        <span>Correct</span>
+
+      </div>
+  </label>
+     
+    </td>
+
+    <td >
+    
+      <label class="container">
+        <div class="check-box">
+          <input  class="form-control" [ngClass]="is-valid"  type="checkbox" [(ngModel)]="editQuestionObj.responseList[i].surveyRatingOption" name="rating{{i}}" (change)="toggleVisibility($event,i)" id="rating{{i}}" value="on">
+          <span>Correct</span>
+  
+        </div>
+     </label>
+       
+      </td>
+
+    <td> <button [disabled]="loggedInUser == quizObj.reviewer" (click) = "deleteRowOnEdit(editQuestionObj.responseList[i].responseSeq,editQuestionObj.responseList)"><i style="color:red" class="fa fa-trash"></i></button></td>
+  </tr>
+</table>
+
+
+
+     <div class="modal-footer">
+       <button type="button"  class="btn btn-outline-primary"  data-dismiss="modal">Cancel</button>&nbsp;&nbsp;
+       <button type="submit"    style="color: white;" data-dismiss="modal" (click)="editQuestionSet(editQuestionObj.questionSeq)"  class="btn btn-primary">Save Question</button>
+     </div>
+     </form>
+   </div>
+ </div>
+</div>
+
+<!-- Edit Question Ends-->
+
+<!-- Quiz Setting Screen Starts-->
+<div style="margin-top: -8%" *ngIf="activesettingFlag">
+<div  class="panel panel-info">
+  <div class="panel-heading-title">
+    <div class="panel-title"> {{quizObj.quiz_title}} Settings</div>
+  </div>
+</div>
+<br>
+
+<div>
+  <br><br><br>
+
+
+Schedule Date:
+<input type="date"   style="width: 20%;" [(ngModel)]="quizSettingObj.date_schedule" id="select2SinglePlaceholder">
+
+  
+<br><br>
+
+
+
+<div [disabled]="loggedInUser == quizObj.reviewer"  *ngIf="loadContent">
+
+Select States:
+    <ng-multiselect-dropdown #multiSelect
+      [placeholder]="'Select States'"
+      [data]="statesdata"
+      [settings]="settings"
+      [disabled]="false"
+      (onFilterChange)="onFilterChange($event)"
+      (onDropDownClose)="onDropDownClose($event)"
+      (onSelect)="populateCities($event)"
+      (onDeSelect)="deSelectCities($event)"
+      (onSelectAll)="onSelectAll($event)"
+      [(ngModel)]="selectedStates"
+      name='stateSelect'
+      [required]='requiredField'
+      (onDeSelectAll)="onDeSelectAll($event)">
+		</ng-multiselect-dropdown>
+    <span *ngIf="!requiredField && selectedStates.length==0 " style="color: red;">
+      States required
+    </span>
+
+    <br/><br/>
+
+Select Cities:
+    <ng-multiselect-dropdown #multiSelect
+      [placeholder]="'Select Cities'"
+      [data]="citiesdata"
+      [settings]="settings"
+      [disabled]="false"
+      [(ngModel)]="selectedCities"
+      name='cityelect'
+      [required]='requiredField'
+      (onFilterChange)="onFilterChange($event)"
+      (onDropDownClose)="onDropDownClose($event)"
+      (onSelect)="onCitySelect($event)"
+      (onDeSelect)="onCityDeSelect($event)"
+      (onSelectAll)="onSelectAll($event)"
+      (onDeSelectAll)="onDeSelectAll($event)">
+		</ng-multiselect-dropdown>
+
+    <span *ngIf="!requiredField  && selectedCities.length==0 " style="color: red;">
+      Cities is/are required
+    </span>
+ 
+    <br/><br/>
+
+    Select Roles:
+    <ng-multiselect-dropdown #multiSelect
+      [placeholder]="'Select Roles'"
+      [data]="rolesdata"
+      [settings]="settings"
+      [disabled]="selectedRoles.length>0?true:false"
+      [(ngModel)]="selectedRoles"
+      name='roleSelect'
+      [required]='requiredField'
+      (onFilterChange)="onFilterChange($event)"
+      (onDropDownClose)="onDropDownClose($event)"
+      (onSelect)="onRoleSelect($event)"
+      (onDeSelect)="onRoleDeSelect($event)"
+      (onSelectAll)="onSelectAll($event)"
+      (onDeSelectAll)="onDeSelectAll($event)">
+		</ng-multiselect-dropdown>
+
+    <span *ngIf="!requiredField && selectedRoles.length==0" style="color: red;">
+      Roles is/are required
+    </span>
+
+    <br/><br/>
+ 
+   <!-- <input type="submit" value="Submit"> | <input type="reset" value="Reset"> -->
+
+
+</div>
+<div *ngIf="selectedRoles!=null || selectedCities!=null || selectedStates!=null ">
+  <button type="button"  style="color: white;" (click)="resetRoleCity()"  class="btn btn-primary"><i class="fa fa-refresh">Reset</i></button>
+</div>
+<br>
+<button type="submit"    style="color: white;"  (click)="saveSurvey(quizSettingObj)"  class="btn btn-primary"><i class="fa fa-wrench"></i> Save Survey</button>
+<button type="button"   (click)="saveSurvey(quizSettingObj)"  style="color: white;margin-left:90%;margin-top: -3%;" class="btn btn-primary">Next</button>
+<!--<button type="submit" *ngIf="quizSettingObj.status ==='Review'"   style="color: white;"  (click)="backQuizList()"  class="btn btn-primary">Back to QuizList</button> -->
+</div>
+
+          </div>
+
+
+
+
+<!-- Quiz Setting Screen Ends-->
+
+
+
+<!-- Quiz Grading Screen Starts-->
+<div style="margin-top: -8%;overflow: auto;" *ngIf="activegradeFlag">
+  <div  class="panel panel-info">
+    <div class="panel-heading-title">
+      <div class="panel-title"> {{quizObj.quiz_title}} Grading</div>
+    </div>
+  </div>
+  <br>
+<h3>Grading</h3>
+  <div>
+  <table>
+<tr><th>Letter Grade</th><th></th><th>Numeric Grade</th></tr>
+
+<tr [disabled]="loggedInUser == quizObj.reviewer" >
+
+<td>A+</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeAPlus"></td></tr>
+<tr><td>A</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeA"></td></tr>
+<tr><td>A-</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeAMinus"></td></tr>
+<tr><td>B+</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeBPlus"></td></tr>
+<tr><td>B</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeB"></td></tr>
+<tr><td>B-</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeBMinus"></td></tr>
+<tr><td>C+</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeCPlus"></td></tr>
+<tr><td>C</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeC"></td></tr>
+<tr><td>C-</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeCMinus"></td></tr>
+<tr><td>D+</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeDPlus"></td></tr>
+<tr><td>D</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeD"></td></tr>
+<tr><td>D</td><td>>=</td><td><input type="text" style="width: 10%;"  size="20" [(ngModel)]="gradeObj.gradeDMinus"></td>
+
+
+</tr>
+
+
+  </table>
+
+
+  </div>
+
+  <button type="submit" [disabled]="loggedInUser == quizObj.reviewer"   style="color: white;"  (click)="saveGrading(gradeObj)"  class="btn btn-primary">Save Grade</button>
+  <button type="button"   *ngIf="loggedInUser == quizObj.reviewer" (click)="saveGrading(gradeObj)"  style="color: white;margin-left:90%;margin-top: -3%;" class="btn btn-primary">Next</button>
+
+
+            </div>
+
+
+
+
+  <!-- Quiz Grading Screen Ends-->
+
+
+<!-- Quiz Manage Screen Starts-->
+<div style="margin-top: -8%;overflow: auto;" *ngIf="activemanageFlag">
+  <div  class="panel panel-info">
+    <div class="panel-heading-title">
+      <div class="panel-title"> {{quizObj.quiz_title}} Manage</div>
+    </div>
+  </div>
+  <br>
+<h3>Color Settings</h3>
+  <div>
+  <table>
+<tr><td>Select Font Style </td><td><select [disabled]="loggedInUser == quizObj.reviewer"  style="margin-top: 1%;
+  width: 20%;
+  margin-left: -30%;" (change)="validateForm()"   class="form-control" name="fontFace"  [(ngModel)]="quizSetting.fontFace" id="select2SinglePlaceholder">
+  <option selected value="Select Font Face">Select Font Face </option>
+  <option  [value]="fontface" *ngFor="let fontface of fontFamily"> {{fontface}}</option>
+</select></td></tr>
+
+<tr><div [disabled]="loggedInUser == quizObj.reviewer"  [ngClass]="{'arial-class': quizSetting.fontFace === 'sans-serif',
+   'courier-class':quizSetting.fontFace === 'Monospace' ,
+   'serif-class':quizSetting.fontFace === 'cursive',
+   'lucida-class':quizSetting.fontFace === 'fantasy'}"
+ >{{quizSetting.fontFace}}</div></tr>
+
+<tr><td>Select Font Color </td><td><select [disabled]="loggedInUser == quizObj.reviewer"  style="margin-top: 1%;
+  width: 20%;
+  margin-left: -30%;" (change)="validateForm()"   class="form-control" name="fontColor"  [(ngModel)]="quizSetting.fontColor" id="select2SinglePlaceholder">
+  <option selected value="Select Font Color">Select Font Color </option>
+  <option  [value]="color" *ngFor="let color of colorList"> {{color}}</option>
+</select></td></tr>
+<tr><td>Select Checkbox Style Color </td><td>
+
+
+<!-- Default unchecked -->
+<div class="custom-control custom-checkbox">
+  <input [disabled]="loggedInUser == quizObj.reviewer"  type="checkbox" name="checkBoxStyle" [(ngModel)]="quizSetting.defaultCheck" class="custom-control-input" id="defaultUnchecked">
+  <label class="custom-control-label" for="defaultUnchecked">Default unchecked</label>
+</div>
+
+<!-- Material unchecked -->
+<label class="container">Material CheckBox
+  <input [disabled]="loggedInUser == quizObj.reviewer"  type="checkbox" name="checkBoxStyle" [(ngModel)]="quizSetting.materialCheck" checked="checked">
+  <span class=""></span>
+</label>
+<!-- Filled-in checkbox -->
+<label class="container">Filled In
+  <input [disabled]="loggedInUser == quizObj.reviewer"  type="checkbox" name="checkBoxStyle" [(ngModel)]="quizSetting.filledCheck" checked="checked">
+  <span class="checkmark2"></span>
+</label>
+
+
+</td></tr>
+<tr><td>Select Radio Style </td> <td>Select This:
+  <label class="container">
+    <input [disabled]="loggedInUser == quizObj.reviewer"  type="checkbox" name="checkBoxStyle" name="radioStyle" [(ngModel)]="quizSetting.squareRadio" checked="checked">
+    <span class=""></span>
+  </label>
+
+  <div class="radio-toolbar">
+    <input   type="radio" id="radioApple" name="radioFruit" value="apple" checked>
+    <label for="radioApple">Apple</label>
+  </div>
+  <div class="radio-toolbar">
+    <input type="radio" id="radioBanana" name="radioFruit" value="banana">
+    <label for="radioBanana">Banana</label>
+</div>
+<div class="radio-toolbar">
+    <input type="radio" id="radioOrange" name="radioFruit" value="orange">
+    <label for="radioOrange">Orange</label> 
+</div>
+<p>&nbsp;</p>
+
+</td>
+
+<td>Select This:
+
+  <label class="container">
+    <input type="checkbox" [disabled]="loggedInUser == quizObj.reviewer"  name="checkBoxStyle" name="radioStyle" [(ngModel)]="quizSetting.normalRadio" checked="checked">
+    <span class=""></span>
+  </label>
+		<!--Radio group-->
+    <label class="container">One
+      <input type="radio" checked="checked" name="radio">
+      <span class="radiocheckmark"></span>
+    </label>
+    <label class="container">Two
+      <input type="radio" name="radio">
+      <span class="radiocheckmark"></span>
+    </label>
+
+</td>
+
+<td>Select This:
+
+  <label class="container">
+    <input type="checkbox" [disabled]="loggedInUser == quizObj.reviewer"  name="checkBoxStyle" name="radioStyle" [(ngModel)]="quizSetting.animatedRadio" checked="checked">
+    <span class=""></span>
+  </label>
+  <div   class="check-box">
+    <label>
+      <input  class="form-control"  type="checkbox" >
+      <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none" />
+        <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+      </svg>
+      <span>correct</span>
+    </label>
+  </div>
+
+</td>
+
+
+</tr>
+
+  </table>
+
+
+  </div>
+
+  <button type="submit" [disabled]="loggedInUser == quizObj.reviewer"   style="color: white;"  (click)="saveColorSetting()"  class="btn btn-primary">Save Settings</button>
+  <button type="button" data-toggle="modal" data-target="#reviewModal"  *ngIf="loggedInUser == quizObj.reviewer"   style="color: white;margin-left:80%;margin-top: -3%;" class="btn btn-primary"><i class="fa fa-comments>Comments">Comment</i></button>
+
+
+            </div>
+
+            <!-- Delete Confirm  Modal -->
+     <div class="modal modalReview fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" role="document">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="exampleModalLabel">Quiz Review</h5>
+           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+             <span aria-hidden="true">&times;</span>
+           </button>
+         </div>
+          <form method="POST" action ="saveReview" class="user">
+       
+            <textarea class="form-control" name="comment" rows="3" [(ngClass)]="is-valid" [(ngModel)]="comment"></textarea>
+
+
+
+         <div class="modal-footer">
+ 
+                                          <td><a  style="font-size: 0.9rem;font-family: Arial, Helvetica, sans-serif;cursor: pointer;" data-dismiss="modal" (click)="reviewAction('Approve')"   class="btn  btn-primary"><span class="fa fa-check">Appprove</span></a>
+                                            &nbsp;
+                                            <a 
+                                            style="font-size: 0.9rem;font-family: Arial, Helvetica, sans-serif;cursor: pointer;"
+                                            class="btn  btn-danger" (click)="reviewAction('Reject')" data-dismiss="modal"  ><span class="fa fa-ban">Reject</span></a>
+                                             &nbsp; 
+                                            <a 
+                                            style="font-size: 0.9rem;font-family: Arial, Helvetica, sans-serif;cursor: pointer;"
+                                            class="btn  btn-warning" (click)="reviewAction('ToDo')" data-dismiss="modal" ><span class="fa fa-comments">To Do</span></a>
+                                           </td>
+         </div>
+         </form>
+       </div>
+     </div>
+   </div>
+
+<!-- Modal Ends -->
+
+
+
+  <!-- Quiz Manage Screen Ends-->
+
+
+
+<!-- Quiz Publish Screen Starts-->
+<div style="margin-top: -8%;overflow: auto;" *ngIf="activepublishFlag">
+  <div  class="panel panel-info">
+    <div class="panel-heading-title">
+      <div class="panel-title"> {{quizObj.quiz_title}} Publish</div>
+    </div>
+  </div>
+  <br>
+<h3 class="btn btn-success" *ngIf="quizObj.status ==='Published'" >Yay ! Your Survey has been published <a href="http://localhost:4500/survey-preview/{{quizObj.surveyIndex}}"> Preview Survey</a></h3>
+<!--<h3 class="btn btn-danger" *ngIf="quizObj.status ==='Rejected'" >Sorry Your Quiz is rejected by {{quizObj.reviewer}} due to {{quizObj.comment}} Reason</h3>
+<h3 class="btn btn-warning" *ngIf="quizObj.status ==='Review'" > Your Quiz is still needs work and now in {{quizObj.status}} status <a [routerLink]="['/quiz-play', quizObj.quizIndex]" class="btn btn-success"><i class="fa fa-play-circle">Preview</i></a></h3> -->
+
+  <div>
+  
+    
+
+
+  </div>
+
+  
+
+
+
+            </div>
+
+
+
+
+  <!-- Quiz Publish Screen Ends-->
+
+
+
+
+
+ <!-- Add  Question Modal -->
+ <div class="modal  fade" style="height: 500%; width: 55%;margin-top:5%" id="addQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+ aria-hidden="true">
+ <div class="modal-dialog" role="document">
+   <div class="modal-content modal-content-question">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel"> Add Survey Question</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+      <form #saveQuestionFrm="ngForm"  name="saveQuestionFrm" method="POST"  class="user">
+
+   <br>
+    <textarea  *ngIf="!blobQuestion" class="form-control" (change)="validateForm()" [ngClass]="questionFlag?'is-invalid':'is-valid'"  placeholder="Enter Your Question" id="question"  [(ngModel)]="questionObj.question_title" name="question" rows="3"></textarea>
+    <br>
+    <button style="margin-left: 40%;" (click)="addSurveyResponse(ansRowIndex)" class="btn btn-primary" >Add Answers</button> <br> <br>
+    <table [ngClass]="is-valid">
+      <tr>
+        <th>Response Text</th>
+        <th>Response Rating   </th>
+    
+        <th></th>
+      </tr>
+      <tr  [ngClass]="ansFlag?'is-invalid':'is-valid'" *ngFor="let answer of ansList; let i = index">
+        <td >
+        
+        <label class="container">
+          <div class="check-box">
+            <input  class="form-control" [disabled]="ansList[i].surveyRatingOption" [ngClass]="is-valid"  type="checkbox" [(ngModel)]="ansList[i].surveyTextOption" name="text{{i}}" (change)="toggleVisibility($event,i)" id="text{{i}}" >
+            <span></span>
+    
+          </div>
+      </label>
+         
+        </td>
+    
+        <td >
+        
+          <label class="container">
+            <div class="check-box">
+              <input [disabled]="ansList[i].surveyTextOption"  class="form-control" [ngClass]="is-valid"  type="checkbox" [(ngModel)]="ansList[i].surveyRatingOption" name="rating{{i}}" (change)="toggleVisibility($event,i)" id="rating{{i}}" >
+              <span></span>
+      
+            </div>
+         </label>
+           
+          </td>
+    
+        <td> <button  (click) = "deleteRowOnEdit(editQuestionObj.responseList[i].responseSeq,editQuestionObj.responseList)"><i style="color:red" class="fa fa-trash"></i></button></td>
+    
+  
+    
+        <input class="form-control" [ngClass]="ansFlag?'is-invalid':'is-valid'" type="hidden" name="response_type{{i}}" [(ngModel)]="ans.response_type">
+
+
+     
+    <td> <button (click) = "deleteRow(i)"><i style="color:red" class="fa fa-trash"></i></button></td>
+  </tr>
+</table>
+
+
+     <div class="modal-footer">
+       <button type="button" class="btn btn-outline-primary"  data-dismiss="modal">Cancel</button>&nbsp;&nbsp;
+       <button type="submit"   style="color: white;" data-dismiss="modal" (click)="prepareQuestionSet(questionObj)"  class="btn btn-primary">Save Question</button>
+     </div>
+     </form>
+   </div>
+ </div>
+</div>
+
+<!-- Add Question Ends-->
+
+
+           <div [style.display]="inDesignFlag?'none': 'block'" class="table-responsive">
+             <!-- <table class="table align-items-center table-flush"> -->
+              <table style="overflow: auto;" class="table align-items-center table-flush table-hover" id="example1">
+               <thead >
+                 <tr>
+                   <th>Date Created</th>
+                   <th>Time Created</th>
+                   <th>Title</th>
+                   <th>Creator</th>
+                    <th>Status</th>
+                   <th>Action</th>
+                 </tr>
+               </thead>
+               <tbody>
+
+
+
+
+
+                   <tr *ngFor="let quiz of quizList">
+
+                                        <td *ngIf="loggedInUser == quiz.creator && !checkQuizCreatedByUser(loggedInUser)"><a href="#"></a>{{quiz.audit!=null?quiz.audit.date_created:"Date NA"}}</td>
+                                          <td *ngIf="loggedInUser == quiz.creator && !checkQuizCreatedByUser(loggedInUser)">{{quiz.audit!=null?quiz.audit.time_created:"Time NA"}} </td>
+                                          <td *ngIf="loggedInUser == quiz.creator && !checkQuizCreatedByUser(loggedInUser)">{{quiz.quiz_title}}</td>
+                                          <td *ngIf="loggedInUser == quiz.creator && !checkQuizCreatedByUser(loggedInUser)">{{user.username }}</td>
+                                          <td *ngIf="loggedInUser == quiz.creator && !checkQuizCreatedByUser(loggedInUser)"><span
+                                            [ngClass]="{' badge-info': quiz.status === 'In_Design',
+                                            ' badge-warning': quiz.status === 'Review',
+                                            ' badge-success': quiz.status === 'Published',
+                                            ' badge-danger': quiz.status === 'Rejected'}">
+
+                                            <a style="color:white;cursor: pointer;" (click)="inDesign(quiz)">{{quiz.status}}</a></span></td>
+                                          <td *ngIf="loggedInUser == quiz.creator && !checkQuizCreatedByUser(loggedInUser)"><a href="#" style="font-size: 0.9rem;font-family: Arial, Helvetica, sans-serif;" *ngIf="loggedInUser == quiz.creator && quiz.status!='Published' " (click)="inDesign(quiz)" data-toggle="modal" data-target="#editActivityModal"  class="btn  btn-primary"><span class="fa fa-edit">Edit</span></a>
+                                            <a href="#"
+                                            style="font-size: 0.9rem;font-family: Arial, Helvetica, sans-serif;"
+                                            class="btn  btn-danger"  *ngIf="quiz.status!='Published'" (click)="setDeleteQuiz(quiz.surveyIndex ,quiz.quiz_title )" data-toggle="modal" data-target="#deleteConfrmModal" ><span class="fa fa-trash">Delete</span></a>
+                                             &nbsp; 
+                                            <a 
+                                            style="font-size: 0.9rem;font-family: Arial, Helvetica, sans-serif;cursor: pointer;"
+                                            class="btn  btn-warning" (click)="inDesign(quiz)" *ngIf="loggedInUser == quiz.reviewer"  ><span class="fa fa-comments">Review</span></a>
+                                          &nbsp;
+                                          <a [routerLink]="['/survey-preview', quiz.surveyIndex]"
+                                          style="font-size: 0.9rem;font-family: Arial, Helvetica, sans-serif;cursor: pointer;"
+                                          class="btn  btn-success"  *ngIf="loggedInUser == quiz.creator && quiz.status ==='Published' " ><span class="fa fa-play">Preview</span></a>
+                                          </td>
+
+
+
+
+                   </tr>
+
+                   <div style="text-align: center;color: red;" *ngIf="checkQuizCreatedByUser(loggedInUser)">You Have Not Created Poll Yet!</div>
+
+               </tbody>
+             </table>
+           </div>
+           <div class="card-footer"></div>
+         </div>
+       </div>
+     </div>
+
+
+
+
+
+
+   <!---Container Fluid-->
+ </div>
+ <!-- Footer -->
+ <footer class="sticky-footer bg-white">
+   <div class="container my-auto">
+     <div class="copyright text-center my-auto">
+       <span>copyright &copy; <script> document.write(new Date().getFullYear()); </script> - developed by
+         <b><a href="https://indrijunanda.gitlab.io/" target="_blank">indrijunanda</a></b>
+       </span>
+     </div>
+   </div>
+ </footer>
+ <!-- Footer -->
+</div>
+</div>
+
+<!-- Scroll to top -->
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+
+
+<script src="../../../assets/vendor/jquery/jquery.min.js"></script>
+<script src="../../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+<script src="../../../assets/js/ruang-admin.min.js"></script>
+<script src="../../../assets/vendor/chart.js/Chart.min.js"></script>
+<script src="../../../assets/js/demo/chart-area-demo.js"></script>
+<script src="../../../assets/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+
+</body>
+
+
+
+
+</html>

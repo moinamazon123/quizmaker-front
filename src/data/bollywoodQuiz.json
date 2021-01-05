@@ -1,0 +1,252 @@
+{
+    "id": 110,
+    "quiz_title": "bolly quiz 80s",
+    "introduction_message": "This my second srst bolly quiz",
+    "conclusion_message": "This is the conclusion message",
+    "max_attempt": 2,
+    "status": null,
+    "level": null,
+    "date_schedule": null,
+    "time_schedule": null,
+    "creator": 2,
+    "time": 60,
+    "category": {
+        "category_id": 6,
+        "category_title": null,
+        "category_desc": null,
+        "audit": null
+    },
+    "show_answer": true,
+    "show_score": true,
+    "questionList": [
+        {
+            "id": 120,
+            "question_type": "Multi Choice",
+            "question_mark": 5,
+            "feedBack": {
+                "feedback_id": 89,
+                "feedback": "All are Action",
+                "audit": {
+                    "audit_id": 181,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "10:18:07AM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 353,
+                    "responseSeq": null,
+                    "response": "Mr & Mrs Khiladi",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+
+                    "audit": null
+                },
+                {
+                    "id": 354,
+                    "responseSeq": null,
+                    "response": "International Khiladi",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 355,
+                    "responseSeq": null,
+                    "response": "Khiladi",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 356,
+                    "responseSeq": null,
+                    "response": "Khiladiyon Ka Khiladi",
+                    "correctAnswerFlag": true,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 357,
+                    "responseSeq": null,
+                    "response": "Sabse Bada Khiladi",
+                    "correctAnswerFlag": true,
+                    "selected": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "Two Khiladi Series Hit Movie"
+        },
+        {
+            "id": 121,
+            "question_type": "Single Select(Radio)",
+            "question_mark": 5,
+            "feedBack": {
+                "feedback_id": 90,
+                "feedback": "Movie shoot in Goa",
+                "audit": {
+                    "audit_id": 181,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "10:18:07AM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 358,
+                    "responseSeq": null,
+                    "response": "Mahesh Bhatt",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 359,
+                    "responseSeq": null,
+                    "response": "Farhan Akhtar",
+                    "correctAnswerFlag": true,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 360,
+                    "responseSeq": null,
+                    "response": "Daved Dhawan",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 361,
+                    "responseSeq": null,
+                    "response": "Rajiv Rai",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "Director of Dil Chah Ta Hai"
+        },
+        {
+            "id": 122,
+            "question_type": "Single Select(CheckBox)",
+            "question_mark": 9,
+            "feedBack": {
+                "feedback_id": 91,
+                "feedback": "Movie Releaed in 1994",
+                "audit": {
+                    "audit_id": 181,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "10:18:07AM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 362,
+                    "responseSeq": null,
+                    "response": "Barsaat",
+                    "correctAnswerFlag": true,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 363,
+                    "responseSeq": null,
+                    "response": "Humraaz",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 364,
+                    "responseSeq": null,
+                    "response": "Karib",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "Bobby Deols's First Movie ?"
+        }
+    ],
+    "assigneeUserList": "3,4",
+    "audit": {
+        "audit_id": 181,
+        "userId": 2,
+        "audit_event": "Feedback created",
+        "date_created": "2020-10-15",
+        "time_created": "10:18:07AM",
+        "date_updated": null,
+        "time_updated": null
+    },
+    "activity": null,
+    "grade": {
+        "id": 4,
+        "gradeAPlus": "90%",
+        "gradeAMinus": "80%",
+        "gradeA": "76%",
+        "gradeBPlus": "60%",
+        "gradeBMinus": "75%",
+        "gradeB": "65%",
+        "gradeCPlus": "60%",
+        "audit": null,
+        "gradeCMinus": null,
+        "gradeC": null,
+        "gradeDPlus": null,
+        "gradeDMinus": null,
+        "gradeD": null,
+        "grade_id": 4
+    },
+    "reviewer": 2,
+    "creatorId": 2,
+    "invigilator": 4,
+    "quizSetting": {
+        "id": 4,
+        "checkBoxStyle": "green",
+        "fontFace": "Arial",
+        "radioStyle": null,
+        "defaultCheck": false,
+        "materialCheck": false,
+        "filledCheck": false,
+        "normalRadio": false,
+        "animatedRadio": false,
+        "squareRadio": false,
+        "dropdownStyle": null,
+        "backgroundColor": null,
+        "fontColor": null,
+        "totalTime": "60",
+        "reviewQuestionFlag": true,
+        "audit": null
+    },
+    "gradeList": {
+        "id": 4,
+        "gradeAPlus": "90%",
+        "gradeAMinus": "80%",
+        "gradeA": "76%",
+        "gradeBPlus": "60%",
+        "gradeBMinus": "75%",
+        "gradeB": "65%",
+        "gradeCPlus": "60%",
+        "audit": null,
+        "gradeCMinus": null,
+        "gradeC": null,
+        "gradeDPlus": null,
+        "gradeDMinus": null,
+        "gradeD": null,
+        "grade_id": 4
+    }
+}

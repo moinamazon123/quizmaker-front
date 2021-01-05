@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="../../../assets/image/quizlogo.png" rel="icon">
+  <title>QuizMaker - Register</title>
+
+
+  <link href="../../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="../../../assets/css/ruang-admin.min.css" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body class="bg-gradient-login">
+
+  <!-- Register Content -->
+  <div class="container-login">
+    <div class="row justify-content-center">
+      <div class="col-xl-10 col-lg-12 col-md-9">
+        <div class="card shadow-sm my-5">
+          <div class="card-body p-0">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="login-form">
+                  <div style="overflow: auto" class="text-center">
+                    <div class="alert alert-success" *ngIf="userIn">User Registration Successful</div>
+                    <div class="alert alert-danger" *ngIf="checkUsernameExistsFlag">User Name Exists</div>
+                    <div class="alert alert-danger" *ngIf="this.checkEmailExistsFlag">Emails Exists</div>
+                    <div class="alert alert-danger" *ngIf="this.passwordCheckFlag">Password & Confirm password should match</div>
+                 <i *ngIf="loading" class="fa fa-spinner"></i>
+                    <img  style="margin-left: 8%;height: 70px;width:70px" src="../../../assets/image/quizlogo.png">
+                    <h1 class="h4 text-gray-900 mb-4">Register</h1>
+                  </div>
+                  <form (ngSubmit)="onSubmit()">
+                   
+                    <div class="form-group">
+                      <label>User Name</label>
+                      <input type="text" [(ngModel)]="user.username" (change)="checkUserExists()" [ngClass]="is-valid" name="username" class="form-control" id="exampleInputUserName" placeholder="Enter First Name">
+                    </div>
+
+                    <div class="form-group">
+                      <label>Email</label>
+                      <input type="email" [(ngModel)]="user.email" name="email" (change)="checkEmailExists()" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
+                        placeholder="Enter Email Address">
+                    </div>
+                    <div class="form-group">
+                      <label>Mobile Number</label>
+                      <input type="email" class="form-control" [(ngModel)]="user.phone" name="phone" id="exampleInputEmail" aria-describedby="emailHelp"
+                        placeholder="Enter Your Mobile Number">
+                    </div>
+                    <div class="form-group">
+                      <label>Select Country</label>
+                      <select class="form-control" name="country" (change)="populateState()"  [(ngModel)]="user.country">
+                        <option [value]="selected" selected  >--Select Country--</option>
+                        <option [value]="country"  *ngFor="let country of countriesdata ">{{country}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Select State</label>
+                      <select class="form-control" name="state"  (change)="populateCities()"  [(ngModel)]="user.state">
+                        <option [value]="state"  *ngFor="let state of states ">{{state}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>City</label>
+                      <select class="form-control" name="city"   [(ngModel)]="user.city">
+                        <option [value]="city"  *ngFor="let city of cities ">{{city}}</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Address</label>
+                      <input type="textadrea" [(ngModel)]="user.address" name="address" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
+                        placeholder="Enter Your Address">
+                    </div>
+                    <div class="form-group">
+                      <label>Password</label>
+                      <input type="password" [(ngModel)]="user.password" name="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <label>Confirm Password</label>
+                      <input type="password" class="form-control" name="cpassword" (change)="passwordMatch()" [(ngModel)]="user.cpassword" id="exampleInputPasswordRepeat"
+                        placeholder="Repeat Password">
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    </div>
+                    <hr>
+
+                  </form>
+                  <hr>
+                  <div class="text-center">
+                    <a class="font-weight-bold small" href="/login">Already have an account?</a>
+                  </div>
+                  <div class="text-center">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Register Content -->
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="assets/js/ruang-admin.min.js"></script>
+</body>
+
+</html>

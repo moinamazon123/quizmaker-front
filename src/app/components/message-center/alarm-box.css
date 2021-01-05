@@ -1,0 +1,57 @@
+@keyframes leftFly
+{
+from {right: -600px;}
+to {right: 0px;}
+}
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+}
+#alarm-box{
+    z-index:1024;
+    /*border:3px solid #666;*/
+    width:400px;
+    /*height:600px;*/
+    position:fixed;
+    right:6px;
+    /*bottom:50px;    */
+    display: flex;
+    flex-direction:column;
+}
+
+.alarm-modal{
+    animation:leftFly 1s;
+    /*animation-delay: 0.2s;*/
+    position: relative;    
+    /*margin: 2px !important;    */
+    height: 140px;
+    width: 400px;
+}
+.alarm-header{
+    padding: 2px 15px;
+    font-size: 16px;
+    height: 30px;
+    width: 400px;
+    /*background-color:#ccc;*/    
+}
+.alarm-title{
+    margin: 4px 0;
+}
+.alarm-body{    
+    height: 100px;
+    width: 400px;
+    position: relative;
+    font-size: 14px;
+    padding: 8px;
+}
+.alarm-footer{
+    height: 40px;
+    width: 400px;
+    position: absolute;
+    bottom: 0;
+}
+.btn-sm{
+    margin-right: 4px;  
+}

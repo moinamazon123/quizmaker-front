@@ -1,0 +1,82 @@
+<ul class="form-section page-section">
+ 
+  <li id="cid_1" class="form-input-wide" data-type="control_head">
+    <div class="form-header-group  header-large">
+      <div class="header-text httal htvam">
+        <h1 style="text-align: center;" id="header_1" class="form-header" data-component="header">
+          Quiz Feed Back
+        </h1>
+        <div  style="text-align: center;" id="subHeader_1" class="form-subHeader">
+          Please take a moment to fill out this survey
+          
+        </div>
+      </div>
+    </div>
+  </li>
+  <div *ngIf="message!=null">{{message}}</div>
+  <form [formGroup]="form">
+    <table *ngIf="!autoSubmit"><tr><td>
+    <div class="cont">
+      <div class="stars">
+        <ngx-star-rating formControlName="rating1" [(ngModel)]="quizUser.quizDesign" [id]="'rating1'"></ngx-star-rating>
+      </div>
+      <div>Rating: {{form.value.rating1}}</div>
+      <p>Quiz Design</p>
+    </div>
+  </td>
+  <td>
+    <div class="cont">
+      <div class="stars">
+        <ngx-star-rating formControlName="rating2" [(ngModel)]="quizUser.questionDifficulty" [id]="'rating2'"></ngx-star-rating>
+      </div>
+      <div>Rating: {{form.value.rating2}}</div>
+      <p>Question Difficulty</p>
+    </div>
+  </td>
+  <td>
+    <div class="cont">
+      <div class="stars">
+        <ngx-star-rating formControlName="rating3" [(ngModel)]="quizUser.timeConstraint" [id]="'rating3'"></ngx-star-rating>
+      </div>
+      <div>Rating: {{form.value.rating3}}</div>
+      <p>Time Constraint</p>
+    </div>
+    </td>
+    </tr>
+  </table>
+    <button class="btn btn-primary" (click)="submitQuiz()">Submit</button>
+   
+   <!-- <div class="cont">
+        <div class="stars">
+          <ngx-star-rating formControlName="rating2" [id]="'rating2'" [disabled] ="true"></ngx-star-rating>
+        </div>
+        <div>Rating(Disabled): {{form.value.rating2}}</div>
+      </div>
+    </form>
+    
+    
+    <div class="cont">
+      <div class="stars">
+        <ngx-star-rating [(ngModel)]="rating3" [id]="'rating3'" ></ngx-star-rating >
+      </div>
+      <div>Rating: {{ rating3 }}</div>
+    </div>
+   <div class="cont">
+      <div class="stars">
+        <ngx-star-rating formControlName="rating2" [id]="'rating2'" [disabled] ="true"></ngx-star-rating>
+      </div>
+      <div>Rating(Disabled): {{form.value.rating2}}</div>
+    </div>
+  
+   <div class="cont">
+    <div class="stars">
+      <ngx-star-rating [(ngModel)]="rating3" [id]="'rating3'" ></ngx-star-rating >
+    </div>
+    <div>Rating: {{ rating3 }}</div>
+  </div>
+  -->
+  
+  
+  
+ 
+  

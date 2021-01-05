@@ -1,0 +1,10 @@
+<h3 style="text-align:center">Company A Employes in 2017 & 2018</h3>
+
+<div style="display: block">
+  <canvas baseChart
+              [data]="demodoughnutChartData"
+              [labels]="doughnutChartLabels"
+              [chartType]="doughnutChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+</div>

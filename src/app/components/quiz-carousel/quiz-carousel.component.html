@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+
+
+<div class="slideshow-container">
+
+<div id="image0" class="mySlides">
+
+  <img style="height: 130px;width: 250px;" src="/assets/image/quizSlide1.png" >
+  <div class="text">Caption Text</div>
+</div>
+
+<div id="image1" class="mySlides">
+
+  <img style="height: 130px;width: 250px;" src="/assets/image/quizSlide2.png" >
+  <div class="text">Caption Two</div>
+</div>
+
+<div id="image2" class="mySlides">
+
+  <img  style="height: 130px;width: 250px;" src="/assets/image/quizSlide3.png" >
+  <div class="text">Caption Three</div>
+</div>
+
+</div>
+<br>
+<a class="prev"  (click)="plusSlides(-1)">&#10094;Prev</a>
+  <a class="next"  (click)="plusSlides(1)">Next&#10095;</a>
+<div style="text-align:center">
+  <span class="dot" (click)="currentSlide(1)"></span>
+  <span class="dot" (click)="currentSlide(2)"></span>
+  <span class="dot" (click)="currentSlide(3)"></span>
+</div>

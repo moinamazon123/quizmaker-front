@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--<div *ngIf="!loggedIn">
+    <font color="red">Your Session is expired ! <a href="/login">Login</a></font>
+    </div> -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="assets/img/logo/logo.png" rel="icon">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>QuizMaker - Dashboard</title>
+
+</head>
+
+<body id="page-top">
+
+{{quizId}}
+<div >
+  <div style="width:130%" id="wrapper">
+    <!-- Sidebar -->
+   <sidebar-comp></sidebar-comp>
+    <!-- Sidebar -->
+
+    <script>
+
+$("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
+    $("body").toggleClass("sidebar-toggled");
+    $(".sidebar").toggleClass("toggled");
+    if ($(".sidebar").hasClass("toggled")) {
+      $('.sidebar .collapse').collapse('hide');
+    };
+  });
+
+
+    </script>
+    <div  id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- TopBar -->
+        <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+          <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                aria-labelledby="searchDropdown">
+                <form class="navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-1 small" placeholder="What do you want to look for?"
+                      aria-label="Search" aria-describedby="basic-addon2" style="border-color: #3f51b5;">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+            <li style="margin-left: -40%;" class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <div *ngIf="activityLog.reviewingQuiz.length>0 || activityLog.invigilatingQuiz.length>0 ">
+                <span class="badge badge-danger badge-counter">{{activityLog.reviewingQuiz.length+activityLog.invigilatingQuiz.length}}</span>
+              </div>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-comment text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                    <span class="font-weight-bold">You have  {{activityLog.reviewingQuiz.length}} quiz to review </span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-search text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                   You are Invigilating {{activityLog.invigilatingQuiz.length}} quiz
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" [routerLink]="['/quiz-notification', 'activeQuiz']" >
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-tasks text-white"></i>
+                    </div>
+                  </div>
+                  <div *ngIf="activeQuizCount>0">
+                    <div class="small text-gray-500"></div>
+                   You have  {{activeQuizCount}} active quizes to attend
+                  </div>
+                  <div *ngIf="activeQuizCount==0"class="small text-gray-500">
+                    <div class="small text-gray-500"></div>
+                  You dont have any quiz to attend
+                 </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" [routerLink]="['/quiz-notification', 'upcomingQuiz']">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-arrow-right text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                   You have  {{upcomingQuizCount}} upcoming quizes 
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" [routerLink]="['/quiz-notification', 'expiredQuiz']">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-danger">
+                      <i class="fas fa-hourglass-end text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"></div>
+                   You have  {{expiredQuizCount}} expired quizes
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                   <!-- <div class="icon-circle bg-warning">
+                      <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div> -->
+                  </div>
+                <!-- <div>
+                    <div class="small text-gray-500">December 2, 2019</div>
+                    Spending Alert: We've noticed unusually high spending for your account.
+                  </div>-->
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Messages</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <span class="badge badge-warning badge-counter">2</span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="assets/img/man.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
+                      having.</div>
+                    <div class="small text-gray-500">Udin Cilok · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="assets/img/girl.png" style="max-width: 60px" alt="">
+                    <div class="status-indicator bg-default"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people
+                      say this to all dogs, even if they aren't good...</div>
+                    <div class="small text-gray-500">Jaenab · 2w</div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-tasks fa-fw"></i>
+                <span class="badge badge-success badge-counter">3</span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Task
+                </h6>
+                <a class="dropdown-item align-items-center" href="#">
+                  <div class="mb-3">
+                    <div class="small text-gray-500">Design Button
+                      <div class="small float-right"><b>50%</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item align-items-center" href="#">
+                  <div class="mb-3">
+                    <div class="small text-gray-500">Make Beautiful Transitions
+                      <div class="small float-right"><b>30%</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                      <div class="progress-bar bg-warning" role="progressbar" style="width: 30%" aria-valuenow="30"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item align-items-center" href="#">
+                  <div class="mb-3">
+                    <div class="small text-gray-500">Create Pie Chart
+                      <div class="small float-right"><b>75%</b></div>
+                    </div>
+                    <div class="progress" style="height: 12px;">
+                      <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75"
+                        aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">View All Taks</a>
+              </div>
+            </li>
+            <div class="topbar-divider d-none d-sm-block"></div>
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                <img class="img-profile rounded-circle" [src]="getProfileImage()" style="max-width: 60px">
+                <span class="ml-2 d-none d-lg-inline text-white small">{{username }}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" [routerLink]="['/profile']">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" [routerLink]="['/activityLog-comp']">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <!-- Topbar -->
+
+     
+        <div *ngIf="showNotice">
+
+          <session-warning [sesionExpiryflag]="true" [timer]="timer" [username]="username" [userid]="userid"></session-warning>
+
+        </div>
+
+           
+            <!-- Invoice Example -->
+            <div class="col-xl-8 col-lg-7 mb-4">
+              <div class="card">
+                <div  class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Details of {{flag}} of User {{username}}</h6>
+                  <a class="m-0 float-right btn btn-danger btn-sm" href="#">View More <i
+                      class="fas fa-chevron-right"></i></a>
+                </div>
+              
+                <div *ngIf="flag === 'activeQuiz' && eligibility.activeQuizDetailsList.length ==0" class="table-responsive">
+               <font color="red">No Active Quizes</font>
+                </div>
+                <div *ngIf="flag === 'upcomingQuiz' && eligibility.upcomingQuizDetailsList.length ==0" class="table-responsive">
+                  <font color="red">No Upcoming Quizes</font>
+                   </div>
+                 
+                <div *ngIf="flag === 'activeQuiz'" class="table-responsive">
+                  <table  class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Quiz Title</th>
+                        <th>Quiz Index</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                        <th>Level</th>
+                        <th>Date</th>
+                        <th>Attempt Left</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  *ngFor="let quizDetails of eligibility.activeQuizDetailsList">
+                        <td>{{quizDetails.quizTitle}}</td>
+                        <td>{{quizDetails.quizIndex}}</td>
+                        <td>{{quizDetails.quizCategory}}</td>
+                        <td>{{quizDetails.status}}</td>
+                        <td>{{quizDetails.level}}</td>
+                        <td>{{quizDetails.date}}</td>
+                        <td>{{quizDetails.max_attempt_left}}</td>
+                        <td *ngIf="quizDetails.max_attempt_left >0"><a [routerLink]="['/quiz-play', quizDetails.quizIndex]" class="btn btn-success"><i class="fa fa-play">Play</i></a> </td>
+                        <td *ngIf="quizDetails.max_attempt_left ===0"><a  class="btn btn-danger"><i class="fa fa-close">No Attempt</i></a> </td>
+                      </tr>
+                    
+                    </tbody>
+                  </table>
+                </div>
+
+                <div *ngIf="flag === 'activeSurvey'" class="table-responsive">
+                  <table  class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Survey Title</th>
+                        <th>Survey Index</th>
+                        <th>Status</th>
+                        <th>Level</th>
+                        <th>Date</th>
+                        <th>Participated</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  *ngFor="let quizDetails of eligibility.activeSurveyList">
+                        <td>{{quizDetails.quizTitle}}</td>
+                        <td>{{quizDetails.surveyIndex}}</td>
+                        <td>{{quizDetails.status}}</td>
+                        <td>{{quizDetails.level}}</td>
+                        <td>{{quizDetails.date}}</td>
+                        <td>{{quizDetails.surveyParticipated}}</td>
+                        <td *ngIf="!quizDetails.surveyParticipated"><a [routerLink]="['/survey-play', quizDetails.surveyIndex]" class="btn btn-success"><i class="fa fa-play">Play</i></a> </td>
+                        <td *ngIf="quizDetails.surveyParticipated"><a  class="btn btn-danger"><i class="fa fa-close">Participated</i></a> </td>
+                      </tr>
+                    
+                    </tbody>
+                  </table>
+                </div>
+
+                <div *ngIf="flag === 'upcomingSurvey'" class="table-responsive">
+                  <table  class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Survey Title</th>
+                        <th>Survey Index</th>
+                        <th>Status</th>
+                        <th>Level</th>
+                        <th>Date</th>
+                        <th>Participated</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  *ngFor="let quizDetails of eligibility.upcomingSurveyList">
+                        <td>{{quizDetails.quizTitle}}</td>
+                        <td>{{quizDetails.surveyIndex}}</td>
+                        <td>{{quizDetails.status}}</td>
+                        <td>{{quizDetails.level}}</td>
+                        <td>{{quizDetails.date}}</td>
+                        <td>{{quizDetails.surveyParticipated}}</td>
+                       
+                      </tr>
+                    
+                    </tbody>
+                  </table>
+                </div>
+
+
+                <div *ngIf="flag === 'expiredQuiz'" class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Quiz Title</th>
+                        <th>Quiz Index</th>
+                        <th>Quiz Category</th>
+                        <th>Status</th>
+                        <th>Level</th>
+                        <th>Date</th>
+                        <th>Max Attempt Left</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  *ngFor="let quizDetails of eligibility.expiredQuizDetailsList">
+                        <td>{{quizDetails.quizTitle}}</td>
+                        <td>{{quizDetails.quizIndex}}</td>
+                        <td>{{quizDetails.quizCategory}}</td>
+                        <td>{{quizDetails.status}}</td>
+                        <td>{{quizDetails.level}}</td>
+                        <td>{{quizDetails.date}}</td>
+                        <td>{{quizDetails.max_attempt_left}}</td>
+                      </tr>
+                    
+                    </tbody>
+                  </table>
+                </div>
+
+                <div *ngIf="flag === 'upcomingQuiz'" class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Quiz Title</th>
+                        <th>Quiz Index</th>
+                        <th>Quiz Category</th>
+                        <th>Status</th>
+                        <th>Level</th>
+                        <th>Date</th>
+                        <th>Max Attempt Left</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr  *ngFor="let quizDetails of eligibility.upcomingQuizDetailsList">
+                        <td>{{quizDetails.quizTitle}}</td>
+                        <td>{{quizDetails.quizIndex}}</td>
+                        <td>{{quizDetails.quizCategory}}</td>
+                        <td>{{quizDetails.status}}</td>
+                        <td>{{quizDetails.level}}</td>
+                        <td>{{quizDetails.date}}</td>
+                        <td>{{quizDetails.max_attempt_left}}</td>
+                      </tr>
+                    
+                    </tbody>
+                  </table>
+                </div>
+                <div class="card-footer"></div>
+              </div>
+            </div>
+      
+          <!--Row-->
+
+         
+         
+         
+         
+          <!-- Modal Logout -->
+          <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabelLogout">Ohh No!</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to logout?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancel</button>
+                  <a  (click)="logout()" data-dismiss="modal" class="btn btn-primary">Logout</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+    
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+         
+          </div>
+        </div>
+      </footer>
+      <!-- Footer -->
+    </div>
+  </div>
+
+  <!-- Scroll to top -->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <script src="assets/vendor/jquery/jquery.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<script src="assets/js/ruang-admin.min.js"></script>
+
+
+
+</div>
+</div>
+
+</body>
+</html>
+
+
+

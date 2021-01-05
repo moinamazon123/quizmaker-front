@@ -1,0 +1,107 @@
+<div *ngIf="quizParticipationFlg">You have already paricipated in this Survey</div>
+<div *ngIf="introductionFlag && !quizParticipationFlg">
+<div class="alert alert-danger" *ngIf="message!=null">{{message}}</div>
+  <div  class="row">
+    <div class="col-6">
+      <h3  >Survey Application</h3>
+    </div>
+    <div class="col-6">
+
+      {{introductionMessage}}
+      </div>
+      
+      <span *ngIf="!(message!=null)" style="margin-top: 10%;">This website, www.quizmaker.com, (hereinafter referred to as "quizmaker.com") is owned, hosted and operated by Megabit Eservices Pvt Ltd.(hereinafter referred to as testmakerhub).
+
+        It can perfectly usefully for Students, Educational Institutions, Corporate Offices for conducting exam services.
+        
+
+        The term 'authorized user' would include any person, whether an individual or a legal entity who has subscribed to the services of testmakerhub.co, and to whom the access is restricted by the use of a sign in user name and a password. The user name and password are either allotted by testmakerhub.co or chosen by the user or agreed upon by testmakerhub.co. It is made abundantly clear that only the authorised user has the right to access the services so offered by testmakerhub.co. A user can also register by using the existing accounts in Facebook, Google Plus, Twitter and LinkedIn. For the purposes of this agreement, any person who does not have a legal or a contractual right to access the services, but does so, will fall within the definition of an 'unauthorised user' and will be subject to the terms and conditions, and expressly so with respect to respecting the intellectual property rights of the provider, and abiding by licensing terms and conditions.</span>
+       
+      <label *ngIf="!(message!=null)" class="container">Accept Terms
+        <input   type="checkbox" (change)="startQuiz($event)" name="term" [(ngModel)]="termAcceptance" checked="checked">
+        <span class=""></span>
+      </label>
+
+    
+
+</div>
+</div>
+
+
+<div *ngIf="!feedBackFlag && !introductionFlag">
+    <div  class="row">
+    
+      <div class="col-6">
+        <h3  >Survey Application 
+                  
+        </h3>
+      </div>
+     
+    </div>
+    <div id="quiz">
+
+      <div *ngIf="previewMode" class="alert alert-danger">You can't submit the poll while in preview mode</div> 
+      <h2  class="text-center font-weight-normal">  <div *ngIf="previewMode" class="ribbon ribbon-top-left"><span>Preview Mode</span></div> {{quiz.quiz_title}} <a *ngIf="quiz.status !=='Published'" href="quizCreate" class="btn btn-primary">Back</a>  </h2>
+      <hr />
+    <div *ngIf="notAnsweredFlag">You Have not Ansered some questions please answer them or <a style="cursor: pointer;;" (click)="forceSubmit()"  >Submit</a></div>
+     <div *ngIf="mode=='quiz' && quiz">
+    
+        <div *ngIf="ellapsedTime < duration" >
+          <div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}.</div>
+          <div *ngIf="config.duration" class="badge badge-info float-right">Time: {{ellapsedTime}} / {{duration}}</div>
+         
+          <h3 class="font-weight-normal">{{pager.index + 1}}.
+            <span   [innerHTML]="questionShow.question_title"></span>
+        
+          </h3>
+       
+     
+          <div *ngIf="questionShow.question_type !='Short Text'" class="row text-left options">
+            <div class="col-6" *ngFor="let option of questionShow.responseList;let i = index">
+              <label class="container">
+                <div class="check-box" [attr.for]="option.id">
+                 <!-- <input id="{{option.id}}" name="{{option.id}}" class="form-control"  type="checkbox" [(ngModel)]="questionShow.responseList[i].selected" (change)="onSelect(questionShow, option);" />  -->
+               
+                 <input *ngIf="option.surveyTextOption" class="form-control" id="{{option.id}}" name="{{option.id}}"  type="text"  [(ngModel)]="option.surveyText" >
+
+                  <form [formGroup]="form">
+                  <div *ngIf="option.surveyRatingOption" class="stars">
+                    <ngx-star-rating formControlName="rating1" [(ngModel)]="option.rating" [id]="'rating1'"></ngx-star-rating>
+                  </div>
+                </form>
+              </div>
+            </label>
+            </div>
+
+
+
+          </div>
+        </div>
+        <hr />
+        <div *ngIf="!submitFlag" class="text-center">
+          <button class="btn btn-default" *ngIf="config.allowBack" (click)="showPage(0);">First</button>
+          <button class="btn btn-default" *ngIf="config.allowBack" (click)="showPage(pager.index - 1);">Prev</button>
+          <button class="btn btn-primary"  (click)="showPage(pager.index + 1);">{{pager.index + 1 === quiz.questionList.length?'Submit':'Next'}}</button>
+          <button class="btn btn-default" *ngIf="config.allowBack" (click)="showPage(pager.count - 1);">Last</button>
+          <!--<pagination *ngIf="config.showPager" direction-links="false" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>-->
+        </div>
+      </div>
+      
+      
+      <div class="result" *ngIf="mode=='result'">
+        <h2>Survey Result</h2>
+        <h4>Thanks for Partcipating the Survey,Your response time {{surveyUser.completion_time}}</h4>
+        
+        <div id="chartContainer" style="margin-left:-2%;height: 320px; width: 150%;margin-top: 5%;"></div>
+   
+        
+      </div>
+     
+      <hr />
+ 
+    </div>
+    
+    </div>
+   
+    
+    <div *ngIf="feedBackFlag"><review [autoSubmit]="false" [quizUser]="quizUser"></review></div>

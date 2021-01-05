@@ -1,0 +1,206 @@
+<div *ngIf="introductionFlag">
+<div class="alert alert-danger" *ngIf="message!=null">{{message}}</div>
+  <div  class="row">
+    <div class="col-6">
+      <h3 [ngStyle]="{'color': quizSettings.fontColor, 'font-family': quizSettings.fontFace}" >Quiz Application</h3>
+    </div>
+    <div class="col-6">
+
+      {{introductionMessage}}
+      </div>
+      
+      <span *ngIf="!(message!=null)" style="margin-top: 10%;">This website, www.quizmaker.com, (hereinafter referred to as "quizmaker.com") is owned, hosted and operated by Megabit Eservices Pvt Ltd.(hereinafter referred to as testmakerhub).
+
+        It can perfectly usefully for Students, Educational Institutions, Corporate Offices for conducting exam services.
+        
+
+        The term 'authorized user' would include any person, whether an individual or a legal entity who has subscribed to the services of testmakerhub.co, and to whom the access is restricted by the use of a sign in user name and a password. The user name and password are either allotted by testmakerhub.co or chosen by the user or agreed upon by testmakerhub.co. It is made abundantly clear that only the authorised user has the right to access the services so offered by testmakerhub.co. A user can also register by using the existing accounts in Facebook, Google Plus, Twitter and LinkedIn. For the purposes of this agreement, any person who does not have a legal or a contractual right to access the services, but does so, will fall within the definition of an 'unauthorised user' and will be subject to the terms and conditions, and expressly so with respect to respecting the intellectual property rights of the provider, and abiding by licensing terms and conditions.</span>
+       
+      <label *ngIf="!(message!=null)" class="container">Accept Terms
+        <input   type="checkbox" (change)="startQuiz($event)" name="term" [(ngModel)]="termAcceptance" checked="checked">
+        <span class=""></span>
+      </label>
+
+    
+
+</div>
+</div>
+
+
+<div *ngIf="!feedBackFlag && !introductionFlag">
+    <div  class="row">
+    
+      <div class="col-6">
+        <h3 [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}" >Quiz Application</h3>
+      </div>
+   
+    </div>
+    <div id="quiz">
+      <h2 [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}" class="text-center font-weight-normal"><div *ngIf="previewMode" class="ribbon ribbon-top-left"><span>Preview Mode</span></div> {{quiz.quiz_title}} <a *ngIf="quiz.status !=='Published'" href="quizCreate" class="btn btn-primary">Back</a>  </h2>
+      <hr />
+    <div *ngIf="notAnsweredFlag">You Have not Ansered some questions please answer them or <a style="cursor: pointer;;" (click)="forceSubmit()"  >Submit</a></div>
+     <div *ngIf="mode=='quiz' && quiz">
+    
+        <div *ngIf="ellapsedTime < duration" >
+          <div class="badge badge-info">Question {{pager.index + 1}} of {{pager.count}}.</div>
+          <div *ngIf="config.duration" class="badge badge-info float-right">Time: {{ellapsedTime}} / {{duration}}</div>
+         
+          <h3 class="font-weight-normal">{{pager.index + 1}}.
+            <span *ngIf="questionShow.question_type!='Short Text'" [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}" [innerHTML]="questionShow.question_title"></span>
+            <span *ngIf="questionShow.question_type ==='Short Text'" [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}" [innerHTML]="questionShow.question_title"></span>&nbsp;&nbsp;<input [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}" *ngIf="questionShow.question_type ==='Short Text'" style="width:20%" (change)="onShortSelect(questionShow)" [(ngModel)]="correctAns" name="correctAns" type="text">
+          </h3>
+          <h3 *ngIf="questionShow.question_type === 'Audio'">
+              <audio controls [src]="questionShow.blobUrl"></audio>
+          </h3>
+          <h3 *ngIf="questionShow.question_type === 'Video'">
+            <video class="video" 
+            style="width:250px; height:250px;" 
+            controls [src]="questionShow.blobUrl"></video>
+        </h3>
+        <h3 *ngIf="questionShow.question_type === 'Image'">
+          <img height="10%" width="15%" [src]="questionShow.blobUrl">
+      </h3>
+   {{quiz.quizSetting.defaultCheck}}  {{quiz.quizSetting.materialCheck}}   {{quiz.quizSetting.filledCheck}}
+          <div *ngIf="questionShow.question_type !='Short Text'" class="row text-left options">
+            <div class="col-6" *ngFor="let option of questionShow.responseList;let i = index">
+
+          
+  
+           
+               
+        <label class="container">
+                <div *ngIf="quiz.quizSetting.materialCheck"  class="check-box" [attr.for]="option.id">
+                 <!-- <input id="{{option.id}}" name="{{option.id}}" class="form-control"  type="checkbox" [(ngModel)]="questionShow.responseList[i].selected" (change)="onSelect(questionShow, option);" />  -->
+               
+                 <input *ngIf="questionShow.question_type !== 'Multi Select'" class="form-control" id="{{option.id}}" name="{{option.id}}"  type="checkbox" (change)="onSelect(questionShow, option)" [(ngModel)]="option.selected" >
+                  <input *ngIf="questionShow.question_type === 'Multi Select'" class="form-control" id="{{option.id}}" name="{{option.id}}"  type="checkbox" (change)="onMultiSelet($event, questionShow,option)" [(ngModel)]="option.selected" >
+               
+                 
+                  <span *ngIf="questionShow.question_type ==='Image(Checkbox)'">
+                  &nbsp;<img height="550%" width="30%"  [src]="option.blobUrl">
+                  </span>
+                &nbsp;<span *ngIf="questionShow.question_type !=='Image(Checkbox)'">
+                  {{option.response}}
+                </span>
+               
+              </div>
+
+             <!-- <div *ngIf="quiz.quizSetting.defaultCheck"  class="custom-control custom-checkbox">
+                <div class="check-box" [attr.for]="option.id">
+                  <input *ngIf="questionShow.question_type !== 'Multi Select'" class="custom-control-input" id="{{option.id}}" name="{{option.id}}"  type="checkbox" (change)="onSelect(questionShow, option)" [(ngModel)]="option.selected" >
+                <input *ngIf="questionShow.question_type === 'Multi Select'"  type="checkbox" name="{{option.id}}" (change)="onMultiSelet($event, questionShow,option)" [(ngModel)]="option.selected" class="custom-control-input" id="{{option.id}}">
+                            
+                <label *ngIf="questionShow.question_type !=='Image(Checkbox)'" class="custom-control-label"  for="defaultUnchecked"> {{option.response}}</label>
+                <label *ngIf="questionShow.question_type ==='Image(Checkbox)'" class="custom-control-label" for="defaultUnchecked"> 
+                  &nbsp;<img height="550%" width="30%"  [src]="option.blobUrl"></label>
+                 
+                </div>
+              </div> -->
+              
+              <md-checkbox *ngIf="quiz.quizSetting.filledCheck" >
+                <input *ngIf="questionShow.question_type !== 'Multi Select'" class="custom-control-input" id="{{option.id}}" name="{{option.id}}"  type="checkbox" (change)="onSelect(questionShow, option)" [(ngModel)]="option.selected" >
+                <input *ngIf="questionShow.question_type === 'Multi Select'"  type="checkbox" name="{{option.id}}" (change)="onMultiSelet($event, questionShow,option)" [(ngModel)]="option.selected" class="custom-control-input" id="{{option.id}}">
+                <label *ngIf="questionShow.question_type !=='Image(Checkbox)'" class="custom-control-label"  for="defaultUnchecked"> {{option.response}}</label>
+                <label *ngIf="questionShow.question_type ==='Image(Checkbox)'" class="custom-control-label" for="defaultUnchecked"> 
+                  &nbsp;<img height="550%" width="30%"  [src]="option.blobUrl"></label>
+             </md-checkbox>
+
+             <div *ngIf="quiz.quizSetting.defaultCheck" class="custom-control custom-checkbox small" style="line-height: 1.5rem;">
+              <input type="checkbox" id="customCheck" *ngIf="questionShow.question_type !== 'Multi Select'" class="custom-control-input" id="{{option.id}}" name="{{option.id}}"   (change)="onSelect(questionShow, option)" [(ngModel)]="option.selected" >
+              <input type="checkbox" id="customCheck" *ngIf="questionShow.question_type === 'Multi Select'" class="custom-control-input" id="{{option.id}}" name="{{option.id}}"   (change)="onSelect(questionShow, option)" [(ngModel)]="option.selected" >
+              <label *ngIf="questionShow.question_type !=='Image(Checkbox)'" class="custom-control-label" for="{{option.id}}">{{option.response}}
+                </label>
+                <label *ngIf="questionShow.question_type ==='Image(Checkbox)'" class="custom-control-label" for="defaultUnchecked"> 
+                  &nbsp;<img height="550%" width="30%"  [src]="option.blobUrl"></label>
+            </div>
+            
+  
+            
+            </label>
+
+       
+        
+
+
+            </div>
+
+
+
+          </div>
+        </div>
+        <hr />
+        <div class="text-center">
+          <button class="btn btn-default" *ngIf="config.allowBack" (click)="showPage(0);">First</button>
+          <button class="btn btn-default" *ngIf="config.allowBack" (click)="showPage(pager.index - 1);">Prev</button>
+          <button class="btn btn-primary"  (click)="showPage(pager.index + 1);">{{pager.index + 1 === randomQuestions.length?'Submit':'Next'}}</button>
+          <button class="btn btn-default" *ngIf="config.allowBack" (click)="showPage(pager.count - 1);">Last</button>
+          <!--<pagination *ngIf="config.showPager" direction-links="false" total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()"></pagination>-->
+        </div>
+      </div>
+    
+      <div class="row text-center" *ngIf="mode=='review'">
+        <div class="col-4 cursor-pointer" *ngFor="let question of randomQuestions; let index = index;">
+          <div (click)="goTo(index)" class="p-3 mb-2 {{ isAnswered(question) == 'Answered'? 'bg-info': 'bg-warning' }}">{{index + 1}}. {{ isAnswered(question) }}</div>
+        </div>
+      </div>
+      <div class="result" *ngIf="mode=='result' && happySubmit && !showAns">
+       <h4> You have completed your quiz in {{time / 1000}} sec. {{showScore?'Your Score is ':''}}  {{showScore?score:''}} your result is {{result}} , Percentage {{percentage }}  and grade is {{grade}}, Total correct {{totCorrect}} out of {{randomQuestions.length}}</h4>
+      </div>
+      <div class="result" *ngIf="mode=='result' && happySubmit && showAns">
+        <h2>Quiz Result</h2>
+        <h4>You have completed your quiz in {{time / 1000}} sec. {{showScore?'Your Score is ':''}}  {{showScore?score:''}} your result is {{result}} , Percentage {{percentage }}, and grade is {{grade}} ,Total correct {{totCorrect}} out of {{randomQuestions.length}}</h4>
+        <div *ngFor="let question of randomQuestions; let index = index">
+          <div class="result-question"> 
+            <h5 [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}">{{index + 1}}. {{question.question_title}} ...</h5>
+            <div class="row">
+              <div class="col-6" *ngFor="let Option of question.responseList">
+                <label class="container">
+                <div class="check-box" [attr.for]="Option.id">
+                <input id="{{Option.id}}" type="checkbox" disabled="disabled" class="form-control" name="{{Option.id}}" [(ngModel)]="Option.selected" /> 
+              </div>
+            </label>
+                <div *ngIf="question.question_type !== 'Short Text'" class="p-1 m-2 alert {{ correctAnswer(question).includes(Option.response)? 'alert-success': 'alert-danger'}}">{{Option.response}}</div>
+              </div>
+            </div>
+            <div *ngIf="question.question_type !== 'Multi Select' && question.question_type !== 'Short Text'" class="p-1 m-2 alert {{ isCorrect(question) == 'correct'? 'alert-success': 'alert-danger'}}">Your answer is {{isCorrect(question)}}. {{isCorrect(question) == 'correct'? '' :correctAnswer(question)}} </div>
+            <div *ngIf="question.question_type === 'Multi Select'" class="p-1 m-2 alert {{ isMultiAnsCheck(question) == 'correct'? 'alert-success': 'alert-danger'}}">Your answer is {{isMultiAnsCheck(question)}}. {{isMultiAnsCheck(question) == 'correct'? '' :correctAnswer(question)}}  </div>
+            <div *ngIf="question.question_type === 'Short Text'" class="p-1 m-2 alert {{ isShortAnsCheck(question) == 'correct'? 'alert-success': 'alert-danger'}}">Your answer is {{enteredAnwer(question)}} which is {{isShortAnsCheck(question)}}. {{isShortAnsCheck(question) == 'correct'? '' :correctAnswer(question)}}  </div>
+          </div>
+        </div>
+        <h4 *ngIf="quiz.status ==='Published' && !previewMode" class="alert alert-info text-center"><a (click)="feedback()" >Submit Your Feedback</a></h4>
+      </div>
+     
+      <hr />
+      <div *ngIf="mode!='result'">
+        <button *ngIf="ellapsedTime < duration" class="btn btn-warning" (click)="mode = 'quiz'">Quiz</button>
+        <button *ngIf="ellapsedTime < duration" class="btn btn-info" (click)="mode = 'review'">Review</button>
+        <button *ngIf="ellapsedTime < duration"  class="btn btn-primary" (click)="onSubmit();">Submit Quiz</button>
+      </div>
+    </div>
+    
+    </div>
+    <div class="bg-warning" *ngIf="timeOff && !feedBackFlag && !happySubmit">Time Off!
+    
+      <div class="result">
+        <h2 [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}">Quiz Result </h2>
+        <h4>Your quiz has been auto submitted your score {{score}} </h4>
+        <div *ngFor="let question of randomQuestions; let index = index">
+          <div class="result-question">
+            <h5 [ngStyle]="{'color': quiz.quizSetting.fontColor, 'font-family': quiz.quizSetting.fontFace}">{{index + 1}}. {{question.question_title}}</h5>
+           
+            <div class="row">
+              <div class="col-6" *ngFor="let Option of question.responseList">
+                <input id="{{Option.id}}" type="checkbox" disabled="disabled" [(ngModel)]="Option.selected" /> {{Option.response}}
+              </div>
+            </div>
+            <div class="p-1 m-2 alert {{ isCorrect(question) == 'correct'? 'alert-success': 'alert-danger'}}">Your answer is {{isCorrect(question)}}. {{isCorrect(question) == 'correct'? '' :correctAnswer(question)}}</div>
+          </div>
+        </div>
+        <div *ngIf="!previewMode"> <review  [autoSubmit]="true" [quizUser]="quizUser"></review></div>
+        
+      </div>
+    
+    
+    </div>
+    
+    <div *ngIf="feedBackFlag"><review [autoSubmit]="false" [quizUser]="quizUser"></review></div>

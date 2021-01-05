@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/materialize-css/dist/css/materialize.css";
+
+.li {
+  display:inline;
+  white-space: nowrap;
+}
+
+.box {
+  border: 1px solid red;
+}
+
+.container{
+  width:90%;
+}
+

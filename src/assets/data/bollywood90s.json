@@ -1,0 +1,277 @@
+{
+    "id": 109,
+    "quiz_title": "Bollywood Quiz 90s",
+    "introduction_message": "Intro msg",
+    "conclusion_message": "Colclu Msg",
+    "max_attempt": 2,
+    "status": "Review",
+    "level": "Level 2",
+    "date_schedule": null,
+    "time_schedule": null,
+    "scheduleDateTime": null,
+    "creator": 2,
+    "category": {
+        "category_id": 6,
+        "category_title": null,
+        "category_desc": null,
+        "audit": null
+    },
+    "show_answer": true,
+    "show_score": true,
+    "questionList": [
+        {
+            "id": 128,
+            "question_type": "Audio",
+            "question_mark": 0,
+            "blobUrl": "http://localhost:8181/quizmaker/getAudio/1/252_Question_Audio.mp3",
+            "questionSeq": 0,
+            "feedBack": {
+                "feedback_id": 97,
+                "feedback": "",
+                "audit": {
+                    "audit_id": 184,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "03:30:54PM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 376,
+                    "responseSeq": 1,
+                    "imageUrl": null,
+                    "response": "3",
+                    "correctAnswerFlag": false,
+                    "audit": null,
+                    "selected": false
+                },
+                {
+                    "id": 377,
+                    "responseSeq": 0,
+                    "imageUrl": null,
+                    "response": "2",
+                    "correctAnswerFlag": true,
+                    "selected": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "Idenfy the audio"
+        },
+        {
+            "id": 129,
+            "question_type": "Video",
+            "question_mark": 0,
+            "blobUrl": "http://localhost:8181/quizmaker/getVideo/1/251_Question_Video",
+            "questionSeq": 0,
+            "feedBack": {
+                "feedback_id": 98,
+                "feedback": "",
+                "audit": {
+                    "audit_id": 184,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "03:30:54PM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 378,
+                    "responseSeq": 1,
+                    "imageUrl": null,
+                    "response": "cmdjh",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 379,
+                    "responseSeq": 0,
+                    "imageUrl": null,
+                    "response": "sds",
+                    "correctAnswerFlag": true,
+                    "selected": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "Identify the video?"
+        },
+        {
+            "id": 127,
+            "question_type": "Image",
+            "question_mark": 0,
+            "blobUrl": "http://localhost:8181/quizmaker/getImage/1/250_Question_Image.png",
+            "questionSeq": 0,
+            "feedBack": {
+                "feedback_id": 96,
+                "feedback": "",
+                "audit": {
+                    "audit_id": 184,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "03:30:54PM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 375,
+                    "responseSeq": 0,
+                    "imageUrl": null,
+                    "response": "Bike",
+                    "correctAnswerFlag": true,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 374,
+                    "responseSeq": 2,
+                    "imageUrl": null,
+                    "response": "truck",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                },
+                {
+                    "id": 373,
+                    "responseSeq": 1,
+                    "imageUrl": null,
+                    "response": "Car",
+                    "correctAnswerFlag": false,
+                    "selected": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "Identify the pic "
+        },
+        {
+            "id": 126,
+            "question_type": "Single Select(Check Box)",
+            "question_mark": 10,
+            "blobUrl": null,
+            "questionSeq": null,
+            "feedBack": {
+                "feedback_id": 95,
+                "feedback": "",
+                "audit": {
+                    "audit_id": 184,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "03:30:54PM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 371,
+                    "responseSeq": 0,
+                    "imageUrl": null,
+                    "response": "J Nehru",
+                    "selected": false,
+                    "correctAnswerFlag": true,
+                    "audit": null
+                },
+                {
+                    "id": 372,
+                    "responseSeq": 1,
+                    "imageUrl": null,
+                    "response": "L Shastri",
+                    "selected": false,
+                    "correctAnswerFlag": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "WHo is First PM Of india ?"
+        },
+        {
+            "id": 127,
+            "question_type": "Image(Check Box)",
+            "question_mark": 5,
+            "blobUrl": null,
+            "questionSeq": null,
+            "feedBack": {
+                "feedback_id": 95,
+                "feedback": "",
+                "audit": {
+                    "audit_id": 184,
+                    "userId": 2,
+                    "audit_event": "Feedback created",
+                    "date_created": "2020-10-15",
+                    "time_created": "03:30:54PM",
+                    "date_updated": null,
+                    "time_updated": null
+                }
+            },
+            "responseList": [
+                {
+                    "id": 371,
+                    "responseSeq": 0,
+                    "imageUrl": "http://localhost:8181/quizmaker/getImage/1/250_Question_Image.png",
+                    "response": "Correct",
+                    "selected": false,
+                    "correctAnswerFlag": true,
+                    "audit": null
+                },
+                {
+                    "id": 372,
+                    "responseSeq": 1,
+                    "imageUrl": "http://localhost:8181/quizmaker/getImage/1/250_Question_Image.png",
+                    "response": "Wrong",
+                    "selected": false,
+                    "correctAnswerFlag": false,
+                    "audit": null
+                }
+            ],
+            "audit": null,
+            "question_title": "WHo is First PM Of india ?"
+        }
+    ],
+    "assigneeUserList": null,
+    "audit": {
+        "audit_id": 184,
+        "userId": 2,
+        "audit_event": "Feedback created",
+        "date_created": "2020-10-15",
+        "time_created": "03:30:54PM",
+        "date_updated": null,
+        "time_updated": null
+    },
+    "activity": null,
+    "grade": null,
+    "time": 60,
+    "reviewer": 2,
+    "creatorId": 2,
+    "invigilator": 3,
+    "quizSetting": {
+        "id": 6,
+        "checkBoxStyle": null,
+        "fontFace": null,
+        "radioStyle": null,
+        "defaultCheck": true,
+        "materialCheck": false,
+        "filledCheck": false,
+        "normalRadio": false,
+        "animatedRadio": false,
+        "squareRadio": true,
+        "dropdownStyle": null,
+        "backgroundColor": null,
+        "fontColor": "Yellow",
+        "totalTime": null,
+        "reviewQuestionFlag": false,
+        "audit": null
+    },
+    "gradeList": null
+}

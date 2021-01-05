@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+              <div *ngIf="sesionWarningflag" class="modal" id="sessionTOModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+              aria-hidden="false">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Session Warning !</h5>
+                    <button type="button" class="close" data-dismiss="modal" (click)="close()" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                   <form method="POST" action ="saveActivity" class="user">
+                 Your session will timeout in  :<b> {{20 -timer}}</b>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" (click)="close()" data-dismiss="modal">Cancel</button>
+                    &nbsp; &nbsp;  <a  (click)="continueSession()" data-dismiss="modal" type="button" style="color: white;" class="btn btn-danger">contine</a>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="sesionExpiryflag" class="modal" id="sessionEXPModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout"
+            aria-hidden="false">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                Your Session is Expired <a href="/login">Login</a>
+              </div>
+            </div>
+          </div>
